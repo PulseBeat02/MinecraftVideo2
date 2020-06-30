@@ -10,23 +10,23 @@
 
 - If you are on **Windows or Mac** :
 
-1) Install VLC here: [https://www.videolan.org/vlc/index.html](https://www.videolan.org/vlc/index.html).
+  1) Install VLC here: [https://www.videolan.org/vlc/index.html](https://www.videolan.org/vlc/index.html).
 
-2) Install the Minecraft Video Plugin, and put it into your Plugins Folder.
+  2) Install the Minecraft Video Plugin, and put it into your Plugins Folder.
 
-3) Run the server accordingly.
+  3) Run the server accordingly.
 
 - If you are on **Linux or Unix** :
 
-1) Run the following command to download the VLC repository onto your machine: **sudo add-apt-repository &quot;deb http://archive.ubuntu.com/ubuntu $(lsb\_release -sc) universe**.
+  1) Run the following command to download the VLC repository onto your machine: **sudo add-apt-repository &quot;deb http://archive.ubuntu.com/ubuntu $(lsb\_release -sc) universe**.
 
-2) After that, run updates to your Linux by running **sudo apt-get update** command.
+  2) After that, run updates to your Linux by running **sudo apt-get update** command.
 
-3) Finally, push updates to your computer by running the **sudo apt-get install command**.
+  3) Finally, push updates to your computer by running the **sudo apt-get install command**.
 
-4) Install the Minecraft Video Plugin, and put it into your Plugins Folder.
+  4) Install the Minecraft Video Plugin, and put it into your Plugins Folder.
 
-5) Run the server accordingly.
+  5) Run the server accordingly.
 
 ![](RackMultipart20200629-4-6rxqp7_html_237499165a11f2b9.gif)
 
