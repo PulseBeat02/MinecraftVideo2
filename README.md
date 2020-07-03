@@ -1,6 +1,6 @@
 # **Minecraft Video Read Me File**
 
-**Version:** 0.0.1
+**Version:** 1.0.0
 
 **Author:** BananaPuncher714
 
@@ -30,7 +30,7 @@
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**Command Usage**
+**Command Usage (For the Old MinecraftVideo)** 
 
 - **/video load**
   - /video load [Video ID] [Youtube URL]
