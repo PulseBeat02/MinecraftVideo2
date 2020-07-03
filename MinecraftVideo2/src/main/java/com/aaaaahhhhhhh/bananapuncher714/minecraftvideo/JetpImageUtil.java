@@ -303,7 +303,7 @@ public final class JetpImageUtil {
 		}
 	}
 	
-	public static ByteBuffer dither2Minecraft( int[] buffer, int width ) {
+	public static ByteBuffer ditherIntoMinecraft( int[] buffer, int width ) {
 		int height = buffer.length / width;
 
 		int widthMinus = width - 1;
@@ -453,6 +453,10 @@ public final class JetpImageUtil {
 }
 
 class LoadRed extends RecursiveTask< byte[] > {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected final int r;
 	protected final int[] palette;
 	
@@ -487,6 +491,10 @@ class LoadRed extends RecursiveTask< byte[] > {
 }
 
 class LoadGreen extends RecursiveTask< byte[] > {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected final int r;
 	protected final int g;
 	protected final int[] palette;
@@ -518,6 +526,10 @@ class LoadGreen extends RecursiveTask< byte[] > {
 }
 
 class LoadBlue extends RecursiveTask< Byte > {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected final int r, g, b;
 	protected final int[] palette;
 	

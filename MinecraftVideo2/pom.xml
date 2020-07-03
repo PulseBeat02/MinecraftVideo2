@@ -46,13 +46,6 @@
 			<version>1.16.1-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>it.sauronsoftware</groupId>
-			<artifactId>jave</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-
 	</dependencies>
 
 	<repositories>
