@@ -6,7 +6,9 @@ import java.lang.ProcessBuilder.Redirect;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+
 import uk.co.caprica.vlcj.player.base.MediaApi;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 public class AudioManager {
 
@@ -38,7 +40,7 @@ public class AudioManager {
 									+ "Downloaded MP3 File from Youtube Link. Proceeding to Conversion.");
 							process.destroy();
 							
-//							MediaApi mediaPlayer = mediaPlayerFactory.newHeadlessMediaPlayer();;
+							MediaApi mediaPlayer = new MediaApi(new MediaPlayer());
 //							mediaPlayer.playMedia( mrl, "sout=#transcode{vcodec=none,acodec=vorbis}:standard{dst=" + output.getAbsolutePath() + ",mux=ogg,access=file}");
 							
 							return;
