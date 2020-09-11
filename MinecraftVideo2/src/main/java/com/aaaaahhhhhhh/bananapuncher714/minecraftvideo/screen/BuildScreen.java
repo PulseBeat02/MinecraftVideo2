@@ -9,6 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -22,12 +24,15 @@ import org.bukkit.inventory.meta.MapMeta;
 import net.md_5.bungee.api.ChatColor;
 
 public class BuildScreen implements CommandExecutor {
+	
+	public static ItemStack wand = new ItemStack(Material.STICK);
+	public static ItemMeta meta = wand.getItemMeta();
 
-	public static ItemMeta meta;
 	public static Location firstLocation;
 	public static Location secondLocation;
 
 	public static Material mat;
+
 	public static boolean checkMaterial = false;
 
 	@EventHandler
@@ -47,6 +52,7 @@ public class BuildScreen implements CommandExecutor {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public MapMeta[] getMaps(int length, int width) {
 
 		int AREA = length * width;
@@ -58,8 +64,6 @@ public class BuildScreen implements CommandExecutor {
 			ItemStack stack = new ItemStack(Material.MAP);
 			MapMeta meta = (MapMeta) stack.getItemMeta();
 			meta.setMapId(i);
-			
-			// Find other way to do this
 
 			maps[i] = meta;
 
@@ -76,7 +80,7 @@ public class BuildScreen implements CommandExecutor {
 
 			Player p = (Player) sender;
 
-			if (args.length == 2) {
+			if (args.length == 1) {
 
 				if (args[0].equalsIgnoreCase("buildscreen")) {
 
@@ -86,7 +90,10 @@ public class BuildScreen implements CommandExecutor {
 
 						if (firstLocation != null && secondLocation != null && mat != null) {
 
-							MapMeta[] maps = getMaps(Integer.parseInt(sizes[0]), Integer.parseInt(sizes[1]));
+							int length = Integer.parseInt(sizes[0]);
+							int width = Integer.parseInt(sizes[1]);
+
+							MapMeta[] maps = getMaps(length, width);
 
 							int topBlockX = (firstLocation.getBlockX() < secondLocation.getBlockX()
 									? secondLocation.getBlockX()
@@ -109,26 +116,40 @@ public class BuildScreen implements CommandExecutor {
 									? secondLocation.getBlockZ()
 									: firstLocation.getBlockZ());
 
+							if (!isFlat(topBlockX - bottomBlockX, topBlockY - bottomBlockY, topBlockZ - bottomBlockZ)) {
+
+								sender.sendMessage(ChatColor.DARK_RED + "The screen isn't flat!");
+								return true;
+
+							}
+
+							int index = 0;
+
 							for (int x = bottomBlockX; x <= topBlockX; x++) {
 
 								for (int z = bottomBlockZ; z <= topBlockZ; z++) {
 
 									for (int y = bottomBlockY; y <= topBlockY; y++) {
 
-										p.getWorld().getBlockAt(x, y, z).setType(mat);
-										
-										// Replace all the blocks facing the player to be maps
-										
+										Block b = p.getWorld().getBlockAt(x, y, z);
+										b.setType(mat);
+										setMap(p, b, maps[index]);
+
+										index++;
+
 									}
 
 								}
 
 							}
 
-						} else {
+						} else if (firstLocation == null || secondLocation == null) {
 
-							sender.sendMessage(ChatColor.DARK_RED
-									+ "One of the locations or Block types aren't set properly yet!");
+							sender.sendMessage(ChatColor.DARK_RED + "One of the locations aren't set properly yet!");
+
+						} else if (mat == null) {
+
+							sender.sendMessage(ChatColor.DARK_RED + "The screen material hasn't been specified yet!");
 
 						}
 
@@ -140,12 +161,12 @@ public class BuildScreen implements CommandExecutor {
 					lore.add("Use this stick to create a screen!");
 					lore.add("LEFT Click - Set First Position");
 					lore.add("RIGHT Click - Set Second Position");
-
+					
+					
 					meta.addEnchant(Enchantment.DAMAGE_UNDEAD, 1, true);
 					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 					meta.setLore(lore);
-
-					ItemStack wand = new ItemStack(Material.STICK);
+					
 					wand.setItemMeta(meta);
 
 					p.getInventory().addItem(wand);
@@ -155,6 +176,29 @@ public class BuildScreen implements CommandExecutor {
 					p.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Banana Gods Have Sent You an Offering!");
 					p.sendMessage(
 							ChatColor.GOLD + "The next block you place will be the material used for the screen.");
+
+				} else if (args[0].contains("map:")) {
+
+					int mapID = Integer.parseInt(args[0].split(":")[1]);
+
+					if (mapID < 0) {
+
+						p.sendMessage(ChatColor.GOLD
+								+ "The Map ID isn't valid. Please specify an ID between 0 - 4,294,967,296.");
+						return true;
+
+					}
+
+					ItemStack stack = new ItemStack(Material.MAP);
+					
+					MapMeta meta = (MapMeta) stack.getItemMeta();
+					meta.setMapId(mapID);
+
+					stack.setItemMeta(meta);
+
+					p.getInventory().addItem(stack);
+
+					p.sendMessage(ChatColor.GOLD + "Given you the map for ID: " + mapID);
 
 				}
 
@@ -169,8 +213,28 @@ public class BuildScreen implements CommandExecutor {
 		return true;
 	}
 
+	public static void setMap(Player p, Block b, MapMeta map) {
+
+		ItemMeta meta = (ItemMeta) map;
+		ItemStack stack = new ItemStack(Material.MAP, 1);
+		stack.setItemMeta(meta);
+
+		Location loc = b.getLocation();
+		loc.setY(loc.getY() - 1);
+
+		ItemFrame itemFrame = (ItemFrame) p.getWorld().spawnEntity(loc, EntityType.ITEM_FRAME);
+		itemFrame.setItem(stack);
+
+	}
+
+	public static boolean isFlat(int l, int w, int h) {
+
+		return l == 1 || w == 1 || h == 1;
+
+	}
+
 	@EventHandler
-	public void rightclick(PlayerInteractEvent event) {
+	public static void onClick(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		ItemStack item = player.getInventory().getItemInMainHand();
 
@@ -178,7 +242,7 @@ public class BuildScreen implements CommandExecutor {
 			return;
 		}
 
-		if (item.getItemMeta().equals(meta)) {
+		if (item.equals(wand)) {
 			if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 
 				firstLocation = event.getClickedBlock().getLocation();

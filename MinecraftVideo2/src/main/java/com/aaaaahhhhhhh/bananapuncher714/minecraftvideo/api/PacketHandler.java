@@ -1,5 +1,6 @@
 package com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.api;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
@@ -37,6 +38,7 @@ public interface PacketHandler {
 	 * The id of a Bukkit MapView
 	 */
 	void registerMap( int id );
+	void sendResourcePack(UUID player, File f);
 	Object onPacketInterceptOut( Player viewer, Object packet );
 	Object onPacketInterceptIn( Player viewer, Object packet );
 }

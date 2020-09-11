@@ -1,16 +1,20 @@
 package com.aaaaahhhhhhh.bananapuncher714.minecraftvideo;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Logger;
+
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -19,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.api.DummyPacketHandler;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.api.PacketHandler;
+import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.screen.BuildScreen;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.tinyprotocol.TinyProtocol;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.util.ReflectionUtil;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.video.EntityNameCallback;
@@ -29,6 +34,7 @@ import io.netty.channel.Channel;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 
 public class MinecraftVideo extends JavaPlugin {
+
 	private static MinecraftVideo INSTANCE;
 
 	TinyProtocol protocol;
@@ -38,6 +44,8 @@ public class MinecraftVideo extends JavaPlugin {
 	ItemFrameCallback callback;
 	EntityNameCallback entityCallback;
 	Entity[] stands;
+
+	boolean paused = false;
 
 	@Override
 	public void onEnable() {
@@ -60,6 +68,8 @@ public class MinecraftVideo extends JavaPlugin {
 				return handler.onPacketInterceptIn(player, packet);
 			}
 		};
+
+		getCommand("video").setExecutor(new BuildScreen());
 
 		JetpImageUtil.init();
 
@@ -87,8 +97,19 @@ public class MinecraftVideo extends JavaPlugin {
 					player.stop();
 					sender.sendMessage("Stopped the Video");
 				} else if (args[0].equalsIgnoreCase("pause")) {
+
+					if (paused) {
+
+						sender.sendMessage("Unpausing the Video");
+
+					} else {
+
+						sender.sendMessage("Paused the Video");
+
+					}
+
 					player.pause();
-					sender.sendMessage("Paused the Video");
+
 				} else if (args[0].equalsIgnoreCase("play")) {
 					sender.sendMessage("Playing the Video");
 					player.resume();
@@ -208,9 +229,25 @@ public class MinecraftVideo extends JavaPlugin {
 		return INSTANCE;
 	}
 
+	public String getExternalIp() {
+		return INSTANCE.getServer().getIp();
+	}
+
+	public static String calcSHA1(File file) throws IOException, NoSuchAlgorithmException {
+
+		MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+		try (InputStream input = new FileInputStream(file)) {
+
+			byte[] buffer = new byte[8192];
+			int len = input.read(buffer);
+
+			while (len != -1) {
+				sha1.update(buffer, 0, len);
+				len = input.read(buffer);
+			}
+
+			return new HexBinaryAdapter().marshal(sha1.digest());
+		}
+	}
+
 }
-
-
-
-
-

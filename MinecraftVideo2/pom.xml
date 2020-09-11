@@ -9,7 +9,6 @@
 	</parent>
 	<artifactId>MinecraftVideo2</artifactId>
 	<description>VLCJ integration with Minecraft</description>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -32,26 +31,40 @@
 		<dependency>
 			<groupId>uk.co.caprica</groupId>
 			<artifactId>vlcj</artifactId>
-			<version>4.5.2</version>
+			<version>4.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
 			<version>5.5.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>
 			<version>1.16.1-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.sealedtx</groupId>
+			<artifactId>java-youtube-downloader</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>it.sauronsoftware</groupId>
+			<artifactId>jave</artifactId>
+			<version>1.0.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/jave-1.0.2.jar</systemPath>
+		</dependency>
 	</dependencies>
-
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 </project>
