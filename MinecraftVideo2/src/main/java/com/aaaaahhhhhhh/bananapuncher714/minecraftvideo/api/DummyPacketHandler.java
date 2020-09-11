@@ -43,7 +43,4 @@ public class DummyPacketHandler implements PacketHandler {
 	public Object onPacketInterceptIn( Player viewer, Object packet ) {
 		return null;
 	}
-
-	@Override
-	public void sendResourcePack(UUID uuid, File f) {}
 }

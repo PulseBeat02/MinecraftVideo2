@@ -38,7 +38,6 @@ public interface PacketHandler {
 	 * The id of a Bukkit MapView
 	 */
 	void registerMap( int id );
-	void sendResourcePack(UUID player, File f);
 	Object onPacketInterceptOut( Player viewer, Object packet );
 	Object onPacketInterceptIn( Player viewer, Object packet );
 }

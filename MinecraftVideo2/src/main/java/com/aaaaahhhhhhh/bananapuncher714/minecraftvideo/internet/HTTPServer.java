@@ -1,4 +1,4 @@
-package com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.test;
+package com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.internet;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,14 +25,14 @@ import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.MinecraftVideo;
  * 
  * @author BananaPuncher714
  */
-public class HTTPServerTest extends Thread {
-
+public class HTTPServer extends Thread {
+	
 	private volatile boolean running = true;
 
 	protected final int port;
 	protected final ServerSocket socket;
 
-	public HTTPServerTest(int port) throws IOException {
+	public HTTPServer(int port) throws IOException {
 		this.port = port;
 		socket = new ServerSocket(port);
 		socket.setReuseAddress(true);
@@ -80,10 +80,10 @@ public class HTTPServerTest extends Thread {
 	}
 
 	public class MineConnection implements Runnable {
-		protected final HTTPServerTest server;
+		protected final HTTPServer server;
 		protected final Socket client;
 
-		public MineConnection(HTTPServerTest server, Socket client) {
+		public MineConnection(HTTPServer server, Socket client) {
 			this.server = server;
 			this.client = client;
 		}

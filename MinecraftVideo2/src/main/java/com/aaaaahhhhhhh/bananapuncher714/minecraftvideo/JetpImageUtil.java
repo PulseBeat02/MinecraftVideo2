@@ -62,6 +62,7 @@ public final class JetpImageUtil {
 		long start = System.nanoTime();
 		for ( int i = 0; i < 256; ++i ) {
 			try {
+				@SuppressWarnings("deprecation")
 				Color color = MapPalette.getColor( ( byte ) i );
 				colors.add( color.getRGB() );
 			} catch ( IndexOutOfBoundsException e ) {

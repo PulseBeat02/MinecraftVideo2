@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
@@ -23,6 +22,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.api.DummyPacketHandler;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.api.PacketHandler;
+import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.internet.ResourcePackHandler;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.screen.BuildScreen;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.tinyprotocol.TinyProtocol;
 import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.util.ReflectionUtil;
@@ -36,6 +36,8 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 public class MinecraftVideo extends JavaPlugin {
 
 	private static MinecraftVideo INSTANCE;
+	
+	public static int port = 420;
 
 	TinyProtocol protocol;
 	PacketHandler handler;
@@ -69,7 +71,7 @@ public class MinecraftVideo extends JavaPlugin {
 			}
 		};
 
-		getCommand("video").setExecutor(new BuildScreen());
+		// getCommand("video").setExecutor(new BuildScreen());
 
 		JetpImageUtil.init();
 
@@ -97,19 +99,12 @@ public class MinecraftVideo extends JavaPlugin {
 					player.stop();
 					sender.sendMessage("Stopped the Video");
 				} else if (args[0].equalsIgnoreCase("pause")) {
-
 					if (paused) {
-
 						sender.sendMessage("Unpausing the Video");
-
 					} else {
-
 						sender.sendMessage("Paused the Video");
-
 					}
-
 					player.pause();
-
 				} else if (args[0].equalsIgnoreCase("play")) {
 					sender.sendMessage("Playing the Video");
 					player.resume();
@@ -140,10 +135,21 @@ public class MinecraftVideo extends JavaPlugin {
 			}
 		} else if (args.length == 3) {
 			if (args[0].equalsIgnoreCase("load")) {
+
 				String url = args[1];
 				String[] dims = args[2].split(":");
 				int width = Integer.parseInt(dims[0]);
 				int height = Integer.parseInt(dims[1]);
+				
+				try {
+					
+					ResourcePackHandler.handle((Player)sender, url);
+					
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+					
+				}
 
 				if (player != null) {
 					player.release();
@@ -229,7 +235,7 @@ public class MinecraftVideo extends JavaPlugin {
 		return INSTANCE;
 	}
 
-	public String getExternalIp() {
+	public static String getExternalIp() {
 		return INSTANCE.getServer().getIp();
 	}
 

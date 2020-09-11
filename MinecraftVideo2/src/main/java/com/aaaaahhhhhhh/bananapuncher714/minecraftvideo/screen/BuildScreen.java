@@ -73,6 +73,7 @@ public class BuildScreen implements CommandExecutor {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -181,10 +182,10 @@ public class BuildScreen implements CommandExecutor {
 
 					int mapID = Integer.parseInt(args[0].split(":")[1]);
 
-					if (mapID < 0) {
+					if (mapID < 0 || mapID > 32768) {
 
 						p.sendMessage(ChatColor.GOLD
-								+ "The Map ID isn't valid. Please specify an ID between 0 - 4,294,967,296.");
+								+ "The Map ID isn't valid. Please specify an ID between 0 - 32768.");
 						return true;
 
 					}

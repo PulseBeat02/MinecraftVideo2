@@ -3,6 +3,8 @@ package com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.video;
 import java.nio.ByteBuffer;
 import java.util.function.Consumer;
 
+import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.videosurface.CallbackVideoSurface;
 import uk.co.caprica.vlcj.player.embedded.videosurface.WindowsVideoSurfaceAdapter;
@@ -43,7 +45,7 @@ public class VideoPlayer {
 			mediaPlayerComponent.release();
 		}
 		
-		mediaPlayerComponent = new uk.co.caprica.vlcj.factory.MediaPlayerFactory().mediaPlayers().newEmbeddedMediaPlayer();
+		mediaPlayerComponent = new MediaPlayerFactory().mediaPlayers().newEmbeddedMediaPlayer();
 		
 		BufferFormatCallback bufferFormatCallback = new BufferFormatCallback() {
 			@Override
@@ -95,7 +97,7 @@ public class VideoPlayer {
 		}
 		
 		@Override
-		protected void onDisplay( uk.co.caprica.vlcj.player.base.MediaPlayer mediaPlayer, int[] buffer ) {
+		protected void onDisplay( MediaPlayer mediaPlayer, int[] buffer ) {
 			callback.accept( buffer );
 		}
 	}
