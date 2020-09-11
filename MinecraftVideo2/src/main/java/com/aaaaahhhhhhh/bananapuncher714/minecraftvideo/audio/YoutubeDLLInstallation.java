@@ -16,7 +16,7 @@ public class YoutubeDLLInstallation {
 
 	private static File YOUTUBE_DL;
 
-	public static boolean setDir(File baseDir) throws IOException {
+	public static boolean installation(File baseDir) throws IOException {
 
 		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
 			YOUTUBE_DL = new File(baseDir, "youtube-dl.exe");

@@ -119,6 +119,11 @@ public class TestCase {
 
 	private class VideoSurfacePanel extends JPanel {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		private VideoSurfacePanel() {
 			setBackground(Color.black);
 			setOpaque(true);

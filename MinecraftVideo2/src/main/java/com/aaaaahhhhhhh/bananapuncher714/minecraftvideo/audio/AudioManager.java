@@ -7,18 +7,18 @@ import java.lang.ProcessBuilder.Redirect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import uk.co.caprica.vlcj.player.base.MediaApi;
-import uk.co.caprica.vlcj.player.base.MediaPlayer;
+import com.aaaaahhhhhhh.bananapuncher714.minecraftvideo.MinecraftVideo;
 
 public class AudioManager {
 
 	protected Process process;
 
-	public AudioManager(String youtubeLink, File YOUTUBE_DL, File dir) {
-		
-		Bukkit.getLogger().info(ChatColor.GOLD
-				+ "Preparing to Download MP3 File from Youtube Link");
-		
+	public AudioManager(String youtubeLink, File YOUTUBE_DL, File dir) throws IOException {
+
+		YoutubeDLLInstallation.installation(MinecraftVideo.getInstance().getDataFolder());
+
+		Bukkit.getLogger().info(ChatColor.GOLD + "Preparing to Download MP3 File from Youtube Link");
+
 		new Thread() {
 
 			@Override
@@ -39,10 +39,25 @@ public class AudioManager {
 							Bukkit.getLogger().info(ChatColor.GOLD
 									+ "Downloaded MP3 File from Youtube Link. Proceeding to Conversion.");
 							process.destroy();
-							
-							MediaApi mediaPlayer = new MediaApi(new MediaPlayer());
-//							mediaPlayer.playMedia( mrl, "sout=#transcode{vcodec=none,acodec=vorbis}:standard{dst=" + output.getAbsolutePath() + ",mux=ogg,access=file}");
-							
+
+							// File source = new File("file path");
+
+							// Audio Attributes
+							//AudioAttributes audio = new AudioAttributes();
+//							audio.setCodec("libmp3lame");
+//							audio.setBitRate(128000);
+//							audio.setChannels(2);
+//							audio.setSamplingRate(44100);
+
+							// Encoding attributes
+							//EncodingAttributes attrs = new EncodingAttributes();
+//							attrs.setFormat("mp3");
+//							attrs.setAudioAttributes(audio);
+
+							// Encode
+							//Encoder encoder = new Encoder();
+							//encoder.encode(new MultimediaObject(source), target, attrs);
+
 							return;
 						}
 						Bukkit.getLogger()
