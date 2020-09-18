@@ -283,35 +283,4 @@ public class NMSHandler implements PacketHandler {
 			this.packet = packet;
 		}
 	}
-
-	@Override
-	public void sendResourcePack(UUID player, File file) {
-		PlayerConnection connection = null;
-		if (player != null) {
-			connection = playerConnections.get(player);
-			if (connection == null) {
-				return;
-			}
-		}
-		try {
-			MinecraftVideo.getInstance().getLogger().info("Sending resource pack download link to " + player);
-			MinecraftVideo.getInstance().getLogger().info("URL: " + "http://" + MinecraftVideo.getInstance().getExternalIp() + ":"
-					+ 6080 + "/" + file.getName());
-			MinecraftVideo.getInstance().getLogger().info("Resource Pack SHA-1 Hash: " + MinecraftVideo.calcSHA1(file).toLowerCase());
-			PacketPlayOutResourcePackSend packet = new PacketPlayOutResourcePackSend(
-					"http://" + MinecraftVideo.getInstance().getExternalIp() + ":" + 6080 + "/"
-							+ file.getName(),
-					MinecraftVideo.calcSHA1(file).toLowerCase());
-			if (connection != null) {
-				connection.sendPacket(packet);
-			} else {
-				for (PlayerConnection connections : playerConnections.values()) {
-					connections.sendPacket(packet);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 }

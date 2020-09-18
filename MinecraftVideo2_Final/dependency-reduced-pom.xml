@@ -23,5 +23,14 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>it.sauronsoftware</groupId>
+      <artifactId>jave</artifactId>
+      <version>1.0.2</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/../lib/jave-1.0.2.jar</systemPath>
+    </dependency>
+  </dependencies>
 </project>
 

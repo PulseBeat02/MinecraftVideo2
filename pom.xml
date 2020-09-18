@@ -6,7 +6,7 @@
 	<artifactId>MinecraftVideo2_Master</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<modules>
 		<module>MinecraftVideo2</module>
 		<module>MinecraftVideo2_v1_16_R1</module>
@@ -14,7 +14,6 @@
 		<module>MinecraftVideo2_v1_16_R3</module>
 		<module>MinecraftVideo2_Final</module>
 	</modules>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -28,4 +27,13 @@
 			</plugin>
 		</plugins>
 	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>it.sauronsoftware</groupId>
+				<artifactId>jave</artifactId>
+				<version>1.0.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
